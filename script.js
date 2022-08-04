@@ -14,6 +14,10 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function getRandom(array) {
+  return array[random(0, array.length - 1)];
+}
+
 // Write password to the #password input
 function writePassword() {
   var length = prompt("How many character do you want in your password? (8-128)");
@@ -29,6 +33,28 @@ function writePassword() {
 
   function generatePassword() {
     var possibleCharacters = [];
+
+    if (lowercase) {
+      possibleCharacters.concat(lowercaseCharacters);
+    }
+    if (uppercase) {
+      possibleCharacters.concat(uppercaseCharacters);
+    }
+    if (numeric) {
+      possibleCharacters.concat(numericCharacters);
+    }
+    if (special) {
+      possibleCharacters.concat(specialCharacters);
+    }
+
+    var newPassword
+    
+    for (i = 0; i < length; i++) {
+      newPassword.push(getRandom(possibleCharacters)); 
+    }
+    
+    return newPassword.join("");
+
   }
 
 
