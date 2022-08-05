@@ -21,49 +21,56 @@ function getRandom(array) {
 // Write password to the #password input
 function writePassword() {
   var length = prompt("How many character do you want in your password? (8-128)");
-  var lowercase = confirm("Do you want your password to include lowercase characters?");
-  var uppercase = confirm("Do you want your password to include uppercase characters?");
-  var numeric = confirm("Do you want your password to include numbers?");
-  var special = confirm("Do you want your password to include special characters?");
+  length = Math.floor(length);
 
-  if (!lowercase && !uppercase && !numeric && !special) {
-    alert("please pick at least one character type");
+  if (length < 8 || length > 128 || length*0 !== 0) {
+    alert("Please enter a number between 8 and 128");
     writePassword();
+  } else {
+    var lowercase = confirm("Do you want your password to include lowercase characters?");
+    var uppercase = confirm("Do you want your password to include uppercase characters?");
+    var numeric = confirm("Do you want your password to include numbers?");
+    var special = confirm("Do you want your password to include special characters?");
+
+    if (!lowercase && !uppercase && !numeric && !special) {
+      alert("please pick at least one character type");
+      writePassword();
+    } else {
+      var password = generatePassword();
+      var passwordText = document.querySelector("#password");
+      passwordText.value = password;
+    }
   }
 
   function generatePassword() {
     var possibleCharacters = [];
 
     if (lowercase) {
-      possibleCharacters.concat(lowercaseCharacters);
+      possibleCharacters = possibleCharacters.concat(lowercaseCharacters);
     }
     if (uppercase) {
-      possibleCharacters.concat(uppercaseCharacters);
+      possibleCharacters = possibleCharacters.concat(uppercaseCharacters);
     }
     if (numeric) {
-      possibleCharacters.concat(numericCharacters);
+      possibleCharacters = possibleCharacters.concat(numericCharacters);
     }
     if (special) {
-      possibleCharacters.concat(specialCharacters);
+      possibleCharacters = possibleCharacters.concat(specialCharacters);
     }
 
-    var newPassword
+    var newPassword = [];
     
     for (i = 0; i < length; i++) {
       newPassword.push(getRandom(possibleCharacters)); 
     }
     
     return newPassword.join("");
-
   }
-
-
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
+
+//debugging
+
